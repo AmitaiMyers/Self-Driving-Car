@@ -7,7 +7,7 @@ function getIntersection(A,B,C,D){
     const uTop=(C.y-A.y)*(A.x-B.x)-(C.x-A.x)*(A.y-B.y);
     const bottom=(D.y-C.y)*(B.x-A.x)-(D.x-C.x)*(B.y-A.y);
 
-    if(bottom!==0){
+    if(bottom!=0){
         const t=tTop/bottom;
         const u=uTop/bottom;
         if(t>=0 && t<=1 && u>=0 && u<=1){
@@ -37,4 +37,12 @@ function polysIntersect(poly1, poly2){
         }
     }
     return false;
+}
+
+function getRGBA(value){
+    const alpha=Math.abs(value);
+    const R=value<0?0:255;
+    const G=R;
+    const B=value>0?0:255;
+    return "rgba("+R+","+G+","+B+","+alpha+")";
 }
