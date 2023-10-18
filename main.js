@@ -7,9 +7,14 @@ const carCtx = carCanvas.getContext("2d");
 const networkCtx = networkCanvas.getContext("2d");
 
 const road=new Road(carCanvas.width/2,carCanvas.width*0.9);
-const N = 500;
+const N = 100;
 const cars=generateCars(N);
 let bestCar = cars[0];
+// Function to update bestCar and save its brain automatically
+function updateBestCar(newBestCar) {
+    bestCar = newBestCar;
+    localStorage.setItem("bestBrain", JSON.stringify(bestCar.brain));
+}
 if(localStorage.getItem("bestBrain")){
     for (let i = 0; i < cars.length; i++) {
         cars[i].brain = JSON.parse(
@@ -120,6 +125,7 @@ function animate(time){
             ...cars.map(c=>c.y)
         )
     );
+    updateBestCar(bestCar);
 
     carCanvas.height=window.innerHeight;
     networkCanvas.height=window.innerHeight;
@@ -142,4 +148,9 @@ function animate(time){
     networkCtx.lineDashOffset=-time/50;
     Visualizer.drawNetwork(networkCtx,bestCar.brain);
     requestAnimationFrame(animate);
+
+    setTimeout(() => {
+        location.reload();
+    }, 120000);
 }
+//240000
